@@ -1,0 +1,9 @@
+「Test Order」 vs 「Place order」 vs 「Place order in demo trading」
+Test Order（測試下單）
+這是指發送一個測試用的訂單指令，API會回應你請求格式正不正確、權限是否足夠，但不會真的在市場中下單。就是檢查用的。
+
+Place Order（下單）
+真正把買賣單送到交易系統，會真實影響你的資產（會用真實錢或真實持倉）。
+
+Place order in demo trading（模擬交易下單）
+這是放到模擬環境的下單，平台不會動用真實錢，只是模擬操作，供學習或測試。
