@@ -1,0 +1,35 @@
+. Cursor 是什麼？
+基於 VS Code 的 AI 編輯器，有內建 Copilot、GPT-4o、Claude 3 等多種模型。
+
+最強大之處：你可以直接 Highlight 指令（或寫成 TODO），它會自己查 docs、自動生成/修正/補全程式。
+
+支援 Python/Jupyter Notebook 專案，適合寫 API script。
+
+2. Cursor 怎麼用來寫 BingX API 下單腳本？
+步驟：
+打開 Cursor，建立新 Python 檔或 .ipynb 筆記本
+
+下目標（英文比較好，Cursor 支援繁中但偏向英文）：
+
+pgsql
+複製
+編輯
+Read BingX API docs.
+Write a Python script to open an order via the BingX USDT perpetual contract API.
+Use variables for API key/secret and order params.
+The code should run in Google Colab or Jupyter.
+Add detailed comments.
+或直接 highlight
+
+less
+複製
+編輯
+TODO: Write a Python function to open an order on BingX via their API. Use best practices and detailed comments.
+Docs: https://bingx-api.github.io/docs/
+（可選）丟入 API 文件連結
+
+Cursor 可以 auto-fetch docs，也可以自己去網頁爬，如果不會自動就手動 copy-paste docs 關鍵範例給 AI。
+
+等待 AI 產生程式碼（可 iteratively refine）
+
+你可以要求「幫我自動測試」、「幫我加 .ipynb 支援」、「參數自動化」、「用 testnet」等需求。
