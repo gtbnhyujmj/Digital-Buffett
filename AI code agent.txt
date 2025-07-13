@@ -1,0 +1,8 @@
+1. 什麼是 GPT Engineer / Open Interpreter？
+這兩個專案都是開源「AI code agent」，可以自動讀 docs，自動產生並測試程式碼。
+
+你給指令（如：「用 BingX API 開倉」），它會自己找 API docs、寫程式、Debug。
+
+GPT Engineer 偏向專案化自動生成、持續編輯。
+
+Open Interpreter 像是一個本地運行的 ChatGPT，能執行程式、幫你寫腳本、Terminal 命令都行。
