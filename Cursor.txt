@@ -1,0 +1,20 @@
+4. 範例：如何在 Cursor 用 AI 寫出 BingX 開倉腳本
+在程式碼區直接寫
+python
+複製
+編輯
+# TODO: Write a Python function that opens an order using the BingX API
+# Reference docs: https://bingx-api.github.io/docs/
+Highlight 這幾行，右鍵選 AI auto-complete（或按 AI generate）。
+
+或用大語言模型聊天視窗（Cursor 內建）
+vbnet
+複製
+編輯
+請幫我用 BingX API 寫一個 Python 開單腳本（能夠在 Colab 跑），用變數存 API key，幫我自動測試。
+5. 總結
+Cursor 支援你的需求，效果極好，而且用 Copilot/Claude/GPT-4o 可以多模型疊加。
+
+完全可以寫出 BingX 下單腳本，能自動加註解、自動測試、補齊 .ipynb。
+
+如果有更進階需求（比如加 webhook、TG通知、定時自動下單），可以再繼續讓 Cursor 幫你自動補強。
