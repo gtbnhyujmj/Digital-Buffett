@@ -1,0 +1,116 @@
+# 這是用自動代理寫的第一版 開倉 未測試
+
+
+# =======================
+# 🔒 Step 1: 安裝依賴
+# =======================
+!pip install requests
+
+# =======================
+# 📄 Step 2: 設定 API 金鑰
+# =======================
+API_KEY = "你的_BingX_API_KEY"
+API_SECRET = "你的_BingX_API_SECRET"
+# BingX API Doc: https://bingx-api.github.io/docs/
+
+# =======================
+# 📄 Step 3: 讀取 txt 指令
+# 格式：
+# BTC-USDT, LONG, 0.01, MARKET
+# ETH-USDT, SHORT, 0.05, LIMIT, 3500
+# =======================
+TXT_PATH = "/content/input_orders.txt"
+
+orders = []
+with open(TXT_PATH, "r", encoding="utf-8") as f:
+    for line in f:
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = [x.strip() for x in line.split(",")]
+        if len(parts) < 4:
+            print(f"❌ 指令格式錯誤: {line}")
+            continue
+        symbol = parts[0]
+        side = parts[1].upper()
+        qty = float(parts[2])
+        order_type = parts[3].upper()
+        price = float(parts[4]) if (order_type == "LIMIT" and len(parts) > 4) else None
+        orders.append({
+            "symbol": symbol,
+            "side": side,
+            "qty": qty,
+            "order_type": order_type,
+            "price": price
+        })
+
+print(f"共發現 {len(orders)} 筆下單指令")
+
+# =======================
+# 📄 Step 4: BingX API 下單 function
+# =======================
+import requests
+import hashlib
+import hmac
+import time
+
+def sign(payload, secret):
+    return hmac.new(secret.encode(), payload.encode(), hashlib.sha256).hexdigest()
+
+def place_order(order):
+    url = "https://open-api.bingx.com/openApi/swap/v2/trade/order"  # 合約下單API
+    timestamp = str(int(time.time() * 1000))
+    params = {
+        "symbol": order['symbol'],
+        "side": "BUY" if order["side"] == "LONG" else "SELL",
+        "positionSide": "LONG" if order["side"] == "LONG" else "SHORT",
+        "quantity": order["qty"],
+        "type": order["order_type"],
+        "timestamp": timestamp,
+        "recvWindow": 5000
+    }
+    if order["order_type"] == "LIMIT" and order["price"]:
+        params["price"] = order["price"]
+
+    # BingX 特有簽名
+    query = "&".join([f"{k}={params[k]}" for k in sorted(params)])
+    signature = sign(query, API_SECRET)
+    params["signature"] = signature
+
+    headers = {
+        "X-BX-APIKEY": API_KEY
+    }
+
+    # 市價單不用 price
+    if order["order_type"] == "MARKET":
+        params.pop("price", None)
+
+    try:
+        response = requests.post(url, params=params, headers=headers)
+        resp_json = response.json()
+        if resp_json.get("code") == 0:
+            print(f"✅ 下單成功: {order['symbol']} {order['side']} {order['qty']}")
+        else:
+            print(f"❌ 下單失敗: {order['symbol']} {order['side']}，原因: {resp_json.get('msg')}")
+        return resp_json
+    except Exception as e:
+        print(f"❌ 下單異常: {order['symbol']} {e}")
+
+# =======================
+# 📄 Step 5: 執行所有指令
+# =======================
+for order in orders:
+    place_order(order)
+
+print("🎉 所有下單指令執行完畢！")
+
+
+
+你需要的 TXT 檔示例
+檔名：input_orders.txt
+（放到 /content/，或你自己 Google Drive 目錄下）
+
+內容例如：
+BTC-USDT, LONG, 0.01, MARKET
+ETH-USDT, SHORT, 0.05, LIMIT, 3500
+# 這一行是註解
