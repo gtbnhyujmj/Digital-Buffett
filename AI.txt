@@ -1,0 +1,10 @@
+你可以現在馬上試的方案
+GPT-4o / ChatGPT
+一樣跟我說需求，我能一直自動迭代程式碼（你用「繼續」或「請自動修正」等指令提醒我），有錯誤我能根據 Log 幫你 debug，只是你還是要動手貼 Log 回來。
+
+用 GPT Engineer / Open Interpreter
+GitHub: GPT Engineer
+GitHub: Open Interpreter
+這兩個都能自動爬 docs，自己寫程式、測試，再輸出成果。
+
+等 Devin AI 開放或有更成熟的產品。
