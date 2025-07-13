@@ -1,0 +1,29 @@
+ 流程說明（推薦用 Open Interpreter）
+(A) 安裝 Open Interpreter
+官方網站：https://github.com/OpenInterpreter/open-interpreter
+快速安裝：
+
+bash
+複製
+編輯
+pip install open-interpreter
+interpreter
+(B) 指令下達範例（英文較佳）
+啟動 interpreter 後，直接輸入你的目標指令：
+
+sql
+複製
+編輯
+請你讀 BingX API docs，寫一個 Python 腳本，能用 API Key 下開倉單（open order），下單參數用變數。
+程式要能在 Google Colab 跑，註解要詳細，並能幫我自動測試成功（用 USDT 永續合約的測試網），最後輸出 .ipynb 給我。
+更建議用英文，效果最好：
+
+pgsql
+複製
+編輯
+Read the BingX API docs.  
+Write a Python script to open a USDT perpetual futures order via the API.  
+Use variables for API key/secret and order params.  
+The code should run in Google Colab, with full explanations and comments.  
+Test the script (if possible using the BingX testnet).  
+Output the result as a downloadable .ipynb notebook.
