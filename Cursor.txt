@@ -18,3 +18,5 @@ Cursor 支援你的需求，效果極好，而且用 Copilot/Claude/GPT-4o 可�
 完全可以寫出 BingX 下單腳本，能自動加註解、自動測試、補齊 .ipynb。
 
 如果有更進階需求（比如加 webhook、TG通知、定時自動下單），可以再繼續讓 Cursor 幫你自動補強。
+
+Cursor 和 VS Code 共用同樣的設定邏輯，只是 Logo 換掉而已。
