@@ -1,0 +1,54 @@
+# BingX API - Open Perpetual Futures Order Example
+
+# 1. 安裝 requests 套件
+!pip install requests
+
+# 2. 載入套件
+import requests
+import time
+import hmac
+import hashlib
+
+# 3. 設定 API KEY、SECRET、下單參數
+API_KEY = "你的API_KEY"
+API_SECRET = "你的API_SECRET"
+BASE_URL = "https://api-swap.bingx.com"
+
+symbol = "BTC-USDT"
+side = "BUY"         # "BUY" or "SELL"
+positionSide = "LONG"  # "LONG" or "SHORT"
+price = "35000"
+quantity = "0.001"
+recvWindow = 5000
+
+# 4. 產生簽名
+def sign_request(params, api_secret):
+    params = '&'.join([f"{k}={params[k]}" for k in sorted(params)])
+    signature = hmac.new(api_secret.encode(), params.encode(), hashlib.sha256).hexdigest()
+    return signature
+
+# 5. 發送下單請求
+def open_order():
+    endpoint = "/openApi/swap/v2/trade/order"
+    timestamp = int(time.time() * 1000)
+    params = {
+        "symbol": symbol,
+        "side": side,
+        "positionSide": positionSide,
+        "price": price,
+        "quantity": quantity,
+        "type": "LIMIT",  # or "MARKET"
+        "timestamp": timestamp,
+        "recvWindow": recvWindow
+    }
+    signature = sign_request(params, API_SECRET)
+    params["signature"] = signature
+
+    headers = {
+        "X-BX-APIKEY": API_KEY
+    }
+
+    response = requests.post(BASE_URL + endpoint, headers=headers, params=params)
+    print(response.status_code, response.text)
+
+open_order()
